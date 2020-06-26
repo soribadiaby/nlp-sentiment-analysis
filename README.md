@@ -2,5 +2,5 @@
 go to the root of the project and type :
 
 ```
-pip install -e
+pip install --editable .
 ```
