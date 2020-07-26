@@ -30,7 +30,7 @@ def plot_word_vectors(w2v):
                            y_axis_type=None,
                            min_border=1)
     
-    word_vectors = [w2v[w] for w in w2v.wv.vocab.keys()] 
+    word_vectors = [w2v.wv[w] for w in w2v.wv.vocab.keys()] 
     
     tsne = TSNE(n_components=2, verbose=1, random_state=0)
     tsne_w2v = tsne.fit_transform(word_vectors)

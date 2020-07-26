@@ -1,3 +1,4 @@
+import os
 import numpy as np
 from gensim.models.word2vec import Word2Vec
 
@@ -19,8 +20,8 @@ def train_w2v(x_train, n_dim):
     w2v : gensim.Word2Vec
         trained word2vec model
     """
-    w2v = Word2Vec(size=n_dim) 
-    print('len words {}'.format(len(x_train)))
+    workers = os.cpu_count()
+    w2v = Word2Vec(size=n_dim, workers=workers) 
     w2v.build_vocab(x_train)
     w2v.train(x_train, total_examples=w2v.corpus_count, epochs=w2v.epochs)
     

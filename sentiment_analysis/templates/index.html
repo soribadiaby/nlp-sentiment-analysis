@@ -1,0 +1,24 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+</head>
+<body>
+<div>
+    <h1>Amazon Review sentiment predictor</h1>
+    <form action="/predict" method="POST">
+        <div>
+            <p>Review</p>
+            <input type="text" name = "review" id="review">
+        </div>
+
+        <input type="submit" value="Predict">
+    </form>
+    <h2>{{pred}}</h2>
+</div>
+</body>
+
+</html>

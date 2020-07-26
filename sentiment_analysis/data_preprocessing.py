@@ -1,80 +1,63 @@
 import os
 import numpy as np
 import pandas as pd
+import swifter
 from nltk.tokenize import word_tokenize
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
 from sentiment_analysis.word_vectors import build_doc_vector
+from nltk.stem import PorterStemmer
 
 
-def load_data(filename, nrows=10000):
+def load_data(filename, nrows=None):
     """
     Load the dataset
     
     Parameters
     ----------
     filename : str
-        the file name
+        the file name (train.ft.txt or test.ft.txt)
         
     Returns
     -------
-    train_data : pd.DataFrame
-        the training data (with 'text' and 'sentiment' columns)
+    data : pd.DataFrame
+         data (with 'text' and 'sentiment' columns)
     """
-    if filename in ['amazon_cells_labelled.txt', 'imdb_labelled.txt', 
-                    'yelp_labelled.txt']:
-        data_path = os.path.join('..', 'data', filename)
-        data = pd.read_csv(data_path, sep='\t', header=None, nrows=nrows,
-                           names=['text', 'sentiment'])
-        
-    elif filename in ['test.ft.txt', 'train.ft.txt']:
-        data_path = os.path.join('..', 'data', filename)
-        data = pd.read_csv(data_path, sep='^([^ ]*)', header=None,
-                           engine='python', nrows=nrows,
-                           names=[0, 'sentiment', 'text'])
-        data.drop(columns=0, inplace=True)
-        data = data.replace({'__label__2':1, '__label__1':0})
+    data_path = os.path.join('..', 'data', filename)
+    data = pd.read_csv(data_path, sep='^([^ ]*)', header=None,
+                       engine='python', nrows=nrows,
+                       names=[0, 'sentiment', 'text'])
+    data.drop(columns=0, inplace=True)
+    data = data.replace({'__label__2':1, '__label__1':0})
     
     return data
-    
 
-def process_data(data):
-    """
-    Create train and test data from initial dataframe
+def filter_tokens(tokens_list):
+    return [word for word in tokens_list if word.isalpha() and len(word) > 2]
+
+
+def stem(tokens_list):
+    ps = PorterStemmer()
+    return [ps.stem(word) for word in tokens_list]
+
     
-    Parameters
-    ----------
-    data : pd.DataFrame
-        dataset with 'text' and 'sentiment' columns 
-        
-    Returns
-    -------
-    splitting : tuple
-        train-test split of input
-    """
-    tokens = data['text'].apply(lambda x: word_tokenize(x.lower())) 
+def tokenize(data):
+    tokens = (data['text']
+    .swifter.apply(lambda x: word_tokenize(x.lower()))
+    .apply(filter_tokens)
+    ) 
     tokens = np.array(tokens)
-    sentiment = np.array(data.sentiment)
-    x_train, x_test, y_train, y_test = train_test_split(tokens,
-                                                        sentiment,
-                                                        test_size=0.25)
     
-    return x_train, x_test, y_train, y_test
+    return tokens
 
 
-def create_tfid_weighted_vec(x_train, x_test, w2v, n_dim):
+def create_tfid_weighted_vec(tokens, w2v, n_dim, tfidf):
     """
     Create train, test vecs using the tf-idf weighting method
     
     Parameters
     ----------
-    x_train : np.array
-        training data (tokenized) where each line corresponds to a document
-        
-    x_test : np.array
-        testing data (tokenized) where each line corresponds to a document
-        
+    tokens : np.array
+        data (tokenized) where each line corresponds to a document
+
     w2v : gensim.Word2Vec
         word2vec model
     
@@ -83,24 +66,11 @@ def create_tfid_weighted_vec(x_train, x_test, w2v, n_dim):
         
     Returns
     -------
-    train_test : tuple
+    vecs_w2v : np.array
         data ready for the model, shape (n_samples, n_dim)    
     """
-    vectorizer = TfidfVectorizer(analyzer=lambda x: x)
-    vectorizer.fit(x_train)
-    tfidf = dict(zip(vectorizer.get_feature_names(), vectorizer.idf_))
-    print('vocab size :', len(tfidf))
-    
-    train_vecs_w2v = np.concatenate(
+    vecs_w2v = np.concatenate(
             [build_doc_vector(doc, n_dim, w2v, tfidf) 
-            for doc in x_train])
-    scaler = StandardScaler()
-    scaler.fit(train_vecs_w2v)
-    train_vecs_w2v = scaler.transform(train_vecs_w2v)
+            for doc in tokens])    
     
-    test_vecs_w2v = np.concatenate(
-            [build_doc_vector(doc, n_dim, w2v, tfidf) 
-            for doc in x_test])
-    test_vecs_w2v = scaler.transform(test_vecs_w2v)
-    
-    return train_vecs_w2v, test_vecs_w2v
+    return vecs_w2v
