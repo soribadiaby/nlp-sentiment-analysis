@@ -94,6 +94,7 @@ greenlet==0.4.15
 grpcio==1.19.0
 guidata==1.7.6
 guiqwt==3.0.3
+gunicorn==20.0.4
 h5py==2.9.0
 HeapDict==1.0.0
 holoviews==1.11.3
@@ -305,7 +306,7 @@ scipy==1.2.1
 scs==2.0.2
 seaborn==0.9.0
 Send2Trash==1.5.0
--e git+https://github.com/soribadiaby/nlp-sentiment-analysis.git@9f57a515a49603b48368958ff2d1dc69112bfd8d#egg=sentiment_analysis
+-e git+https://github.com/soribadiaby/nlp-sentiment-analysis.git@a262c004c3ed978c0a4a8d26c3b670d438e9b360#egg=sentiment_analysis
 Shapely==1.6.4.post1
 simplegeneric==0.8.1
 simplejson==3.16.0
