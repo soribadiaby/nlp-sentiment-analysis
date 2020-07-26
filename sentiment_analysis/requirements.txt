@@ -358,7 +358,7 @@ traitlets==4.3.2
 traittypes==0.2.1
 twine==1.13.0
 twitter==1.17.1
-typed-ast==1.3.1
+typed-ast==1.3.2
 tzlocal==1.5.1
 uncertainties==3.0.3
 urllib3==1.24.1
