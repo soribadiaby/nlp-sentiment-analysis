@@ -369,7 +369,7 @@ virtualenv==20.0.28
 ViTables==3.0.0
 wcwidth==0.1.7
 webencodings==0.5.1
-Werkzeug==0.14.1
+Werkzeug==0.15.3
 widgetsnbextension==3.4.2
 winpython==1.11.20190223
 wordcloud==1.5.0
