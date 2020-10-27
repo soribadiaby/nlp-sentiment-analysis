@@ -46,7 +46,7 @@ colorama==0.4.1
 colorcet==1.0.1
 comtypes==1.1.7
 cookiecutter==1.7.2
-cryptography==2.8
+cryptography==3.2
 cvxopt==1.2.3
 cvxpy==1.0.19
 cx-Freeze==5.1.1
