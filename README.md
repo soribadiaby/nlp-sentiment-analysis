@@ -5,4 +5,6 @@ go to the root of the project and type :
 pip install -e .
 ```
 
-[Link to my application](https://amazon-reviews-sentiment.herokuapp.com/)
+I implemented a sentiment analysis algorithm in Tensorflow/Keras and deployed it using Flask on the cloud (Heroku) 
+
+[Link to my application](https://amazon-reviews-sentiment.herokuapp.com/) (it takes a little time to start up, so please wait)
