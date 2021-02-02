@@ -22,7 +22,7 @@ bcolz==1.2.1
 bcrypt==3.1.7
 beautifulsoup4==4.7.1
 binaryornot==0.4.4
-bleach==3.1.5
+bleach==3.3.0
 blosc==1.7.0
 bloscpack==0.13.0
 bokeh==1.0.4
