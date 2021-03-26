@@ -278,7 +278,7 @@ pywin32==224
 pywin32-ctypes==0.2.0
 pywinpty==0.5.5
 pywinusb==0.4.2
-PyYAML==4.1
+PyYAML==5.4
 pyzmq==18.0.0
 pyzo==4.6.2a0
 QtAwesome==0.5.7
