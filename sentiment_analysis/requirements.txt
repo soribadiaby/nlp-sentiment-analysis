@@ -241,7 +241,7 @@ pyflakes==2.1.1
 pyflux==0.4.17
 pygame==1.9.4
 pygbm==0.1.0
-Pygments==2.3.1
+Pygments==2.7.4
 pyLDAvis==2.1.2
 pylint==2.3.1
 pymc==2.3.7
