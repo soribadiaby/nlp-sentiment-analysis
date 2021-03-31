@@ -148,7 +148,7 @@ llvmlite==0.27.0
 lmfit==0.9.12
 locket==0.2.0
 loky==2.4.2
-lxml==4.3.2
+lxml==4.6.3
 Markdown==3.0.1
 MarkupSafe==1.1.1
 matplotlib==3.0.3
